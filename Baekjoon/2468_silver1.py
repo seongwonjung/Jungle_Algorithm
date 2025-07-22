@@ -5,13 +5,12 @@ input = sys.stdin.readline
 n = int(input())
 vst = [[False]*n for _ in range(n)]
 ground = [list(map(int, input().split())) for _ in range(n)]
-dx = [1,-1,0,0]
+dx = [1,-1,0,0] 
 dy = [0,0,-1,1]
 
 # 처음에 map활용할 생각을 못했음
 max_height = max(map(max, ground))
 
-print(max_height)
 # 비 내리면 전체 -1
 # 0보다 작거나 같아지면 True로
 def raining():
@@ -22,10 +21,11 @@ def raining():
             ground[y][x] -= 1
             if ground[y][x] <= 0:
                 vst[y][x] = True
-    return            
+    return
 
 def dfs(x, y):
     global vst, dx, dy, n
+    # 종료조건
     if vst[y][x]:
         return
     vst[y][x] = True
