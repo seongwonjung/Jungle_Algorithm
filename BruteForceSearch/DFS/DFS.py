@@ -8,22 +8,30 @@ def dfs(x):
         y = graph[x][i]
         if not visited[y]: # 방문하지 않았으면 즉 visited가 False일 때 not을 해주면 True가 되므로 아래 dfs 실행
             dfs(y)
-        
+
+def dfs_stack(start):
+    stack = [start]
+    while(stack):
+        x = stack.pop()
+        if not visited[x]:
+            visited[x] = True
+            print(f"{x} ", end='')
+            # 인접 노드를 역순으로 push 해야 낮은 번호가 먼저 방문됨
+            for i in sorted(graph[x][1:], reverse=True):
+                if not visited[i]:
+                    stack.append(i)
+
 graph[1].extend([2, 3, 8])
-
 graph[2].extend([1, 7])
-
 graph[3].extend([1, 4, 5])
-
 graph[4].extend([3, 5])
-
 graph[5].extend([3, 4])
-
 graph[6].extend([7])
-
 graph[7].extend([2, 6, 8])
-
 graph[8].extend([1, 7])
 
 
 dfs(1)
+print()
+visited = [False]*9
+dfs_stack(1)

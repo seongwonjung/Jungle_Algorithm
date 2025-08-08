@@ -1,20 +1,26 @@
-# 문제
-# N자리 숫자가 주어졌을 때, 여기서 숫자 K개를 지워서 얻을 수 있는 가장 큰 수를 구하는 프로그램을 작성하시오.
+import sys
+input = sys.stdin.readline
+n, k = map(int, input().strip().split())
+numbers = input().strip()
+rst = [int(numbers[0])]
 
-# 입력
-# 첫째 줄에 N과 K가 주어진다. (1 ≤ K < N ≤ 500,000)
-n, k = map(int, input().split())
-# 둘째 줄에 N자리 숫자가 주어진다. 이 수는 0으로 시작하지 않는다.
-number = int(input())
-# 출력
-# 입력으로 주어진 숫자에서 K개를 지웠을 때 얻을 수 있는 가장 큰 수를 출력한다.
-stack = list[]
-for i in range(n):
-    if len(stack) == 0:     # stack이 비어있다면?
-        stack.append(i)
+cnt = 0
+for i in range(1, n):
+    num = int(numbers[i])
+    if not rst:
+        rst.append(num)
+        continue
     
-# 예제 입력 1 
-# 4 2
-# 1924
-# 예제 출력 1 
-# 94
+    if rst[-1] < num:
+        while(rst and k > cnt and rst[-1] < num):
+            rst.pop()
+            cnt += 1
+        rst.append(num)
+    else:
+        rst.append(num)
+        
+# 처음에 틀림 남은 k가 있어서
+# 반복이 끝난 뒤, cnt(사용한 제거 수)가 k보다 작으면
+if cnt < k:
+    rst = rst[:-(k - cnt)]   # 뒤에서 (k-cnt)개 더 제거
+print(*rst, sep='')
